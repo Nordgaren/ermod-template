@@ -12,7 +12,7 @@ pub fn on_attach(_this: &ModEngine2Extension) {
         eldenring_util::system::wait_for_system_init(&Program::current(), Duration::from_secs(60))
             .expect("Could not wait for system init");
 
-        let task = eldenring_util::task::RecurringTask::new(move |a| {
+        let task = eldenring_util::task::RecurringTask::new(move |_| {
 
             let wcm =
                 unsafe { eldenring_util::singleton::get_instance::<WorldChrMan>() }.and_then(|c| {
