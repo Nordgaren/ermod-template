@@ -1,0 +1,20 @@
+[package]
+name = "dinput8-wrapper"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "dinput8"
+crate-type = ["cdylib"]
+
+[toolchain]
+channel = "nightly"
+
+[features]
+Console = []
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+#dll-proxy = { path = "../dll-proxy"}
+dll-proxy = { git = "https://github.com/Nordgaren/dll-proxy.git"}
