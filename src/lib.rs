@@ -2,12 +2,10 @@
 
 mod modengine;
 
-use std::cell::OnceCell;
-use std::ffi::c_void;
-use dll_proxy::proxy_dll;
-use crate::modengine::ModEngine2Extension;
-
-proxy_dll!("dinput8.dll");
+// Uncomment if you want dll proxy. Uncomment init code in `DllMain`, too.
+// use dll_proxy::proxy_dll;
+//
+// proxy_dll!("dinput8.dll");
 
 const DLL_PROCESS_ATTACH: u32 = 1;
 const DLL_PROCESS_DETACH: u32 = 0;
@@ -29,33 +27,17 @@ pub extern "stdcall" fn DllMain(hinstDLL: usize, dwReason: u32, lpReserved: *mut
                 AllocConsole();
                 AttachConsole(u32::MAX);
             }
-            let path = match init_proxy(hinstDLL) {
-                Ok(p) => p,
-                Err(e) => panic!("Could not proxy dll: {e}"),
-            };
-            println!("DLL Proxy started");
+            // If you want dll to proxy another dll.
+            // let path = match init_proxy(hinstDLL) {
+            //     Ok(p) => p,
+            //     Err(e) => panic!("Could not proxy dll: {e}"),
+            // };
+            modengine::init();
             1
         },
         DLL_PROCESS_DETACH => {
             1
         }
-        _ => 0,
+        _ => 1,
     }
 }
-
-static mut EXTENSION: OnceCell<ModEngine2Extension> = OnceCell::new();
-#[unsafe(no_mangle)]
-pub unsafe extern "C" fn modengine_ext_init(
-    _connector: *const c_void,
-    extension: *mut *mut ModEngine2Extension,
-) -> bool {
-    println!("modengine_ext_init internal");
-    EXTENSION.get_or_init(ModEngine2Extension::default);
-    *extension = EXTENSION.get_mut().unwrap();
-
-    true
-}
-
-
-
-

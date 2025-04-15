@@ -1,5 +1,5 @@
 [package]
-name = "dinput8-wrapper"
+name = "ermod-template"
 version = "0.1.0"
 edition = "2021"
 
@@ -10,13 +10,8 @@ crate-type = ["cdylib"]
 [features]
 Console = []
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-vtable-rs = { git = "https://github.com/tremwil/vtable-rs.git" }
-# dll-proxy = { path = "../dll-proxy" }
-dll-proxy = { git = "https://github.com/Nordgaren/dll-proxy.git" }
+# dll-proxy = { git = "https://github.com/Nordgaren/dll-proxy.git" }
+modengine2-ext = { path = "../modengine2-rs", features = ["modengine_ext_init"] }
 eldenring = { git = "https://github.com/vswarte/eldenring-rs.git" }
 eldenring-util = { git = "https://github.com/vswarte/eldenring-rs.git" }
-modengine2-rs = { path = "../modengine2-rs" }
-device_query = "3.0.1"
